@@ -180,7 +180,7 @@ form button:hover {
 }
 
 /* JavaScript to change header color when scrolling */
-<script>
+/* <script>
     window.addEventListener('scroll', function() {
         const header = document.querySelector('header');
         const whiteBackgroundSections = document.querySelectorAll('.about-section, .program-section, .objectives-section, .signup-section, .contact-section');
@@ -199,4 +199,4 @@ form button:hover {
             header.classList.remove('scrolled');
         }
     });
-</script>
+</script> */
