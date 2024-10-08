@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viaggio in Rwanda - Estate 2025</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Fixed Header with Navigation Links -->
+    <header>
+        <nav>
+            <a href="#hero" onclick="scrollToSection('hero')">Home</a>
+            <a href="#about" onclick="scrollToSection('about')">Il Progetto</a>
+            <a href="#program" onclick="scrollToSection('program')">Programma</a>
+            <a href="#objectives" onclick="scrollToSection('objectives')">Obiettivi e Attività</a>
+            <a href="#gallery" onclick="scrollToSection('gallery')">Galleria</a>
+            <a href="#signup" onclick="scrollToSection('signup')">Iscrizione</a>
+            <a href="#contact" onclick="scrollToSection('contact')">Contatti</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="hero-content">
+            <h1>Viaggio in Rwanda - Estate 2025</h1>
+            <p>Unisciti a noi per un'esperienza indimenticabile di volontariato e scoperta in Rwanda!</p>
+            <button onclick="scrollToSection('about')">Scopri di più</button>
+            <div class="language-selector">
+                <a href="#" onclick="switchLanguage('it')">Italiano</a> | <a href="#" onclick="switchLanguage('en')">English</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About the Project Section -->
+    <section id="about" class="about-section">
+        <div class="about-content">
+            <h2>Il Progetto</h2>
+            <p>Il "Viaggio in Rwanda - Estate 2025" è un'opportunità unica per studenti e adulti di esplorare la cultura africana, contribuire al volontariato locale e vivere un'avventura indimenticabile. Il progetto è guidato dal prof. Habimana Jean Paul, che mira a promuovere lo scambio culturale e la crescita personale dei partecipanti.</p>
+        </div>
+    </section>
+
+    <!-- Program Overview Section -->
+    <section id="program" class="program-section">
+        <div class="program-content">
+            <h2>Programma del Viaggio</h2>
+            <ul>
+                <li><strong>16 luglio 2025:</strong> Partenza da Milano.</li>
+                <li><strong>17 luglio 2025:</strong> Arrivo a Kigali, visita al Memoriale del Genocidio dei Tutsi a Gisozi.</li>
+                <li><strong>18 luglio 2025:</strong> Visita al Parco di Akagera, osservazione della fauna selvatica.</li>
+                <li><strong>19 luglio 2025:</strong> Visita ai Musei Nazionali di Nyanza e Butare.</li>
+                <li><strong>20-24 luglio 2025:</strong> Esperienza alla scuola primaria di Bumazi, attività di volontariato e insegnamento.</li>
+                <li><strong>25 luglio 2025:</strong> Partenza per Kibuye/Butare.</li>
+                <li><strong>26 luglio 2025:</strong> Attività di relax a Kigali, cena di addio.</li>
+                <li><strong>27 luglio 2025:</strong> Rientro in Italia.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Objectives and Activities Section -->
+    <section id="objectives" class="objectives-section">
+        <div class="objectives-content">
+            <h2>Obiettivi e Attività</h2>
+            <ul>
+                <li><strong>Attività sportive:</strong> I partecipanti potranno praticare attività sportive presso la scuola di Bumazi, promuovendo la crescita personale, il lavoro di squadra e il rispetto reciproco.</li>
+                <li><strong>Aiuto scolastico:</strong> Collaborazione con la scuola primaria di Bumazi per aiutare i bambini nello svolgimento dei compiti e favorire la loro crescita culturale.</li>
+                <li><strong>Conoscenza di sé:</strong> I partecipanti avranno l'opportunità di esplorare il Rwanda, incontrare nuove persone e riflettere sulle proprie esperienze per una crescita personale profonda.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery-section">
+        <div class="gallery-content">
+            <h2>Galleria</h2>
+            <p>Scopri alcuni momenti che potrai vivere durante il viaggio in Rwanda!</p>
+            <div class="gallery-images">
+                <img src="images/gallery1.jpg" alt="Paesaggio del Rwanda">
+                <img src="images/gallery2.jpg" alt="Attività di volontariato">
+                <img src="images/gallery3.jpg" alt="Fauna selvatica nel Parco di Akagera">
+                <img src="images/gallery4.jpg" alt="Studenti della scuola di Bumazi">
+            </div>
+        </div>
+    </section>
+
+    <!-- Sign-Up and Information Form Section -->
+    <section id="signup" class="signup-section">
+        <div class="signup-content">
+            <h2>Iscriviti per maggiori informazioni</h2>
+            <p>Se sei interessato a partecipare al viaggio o vuoi saperne di più, compila il modulo qui sotto!</p>
+            <form action="#" method="post">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="age">Età:</label>
+                <input type="number" id="age" name="age" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Messaggio:</label>
+                <textarea id="message" name="message" rows="4" placeholder="Domande o commenti..."></textarea>
+
+                <button type="submit">Invia</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Contact Information Section -->
+    <section id="contact" class="contact-section">
+        <div class="contact-content">
+            <h2>Contatti</h2>
+            <p>Per ulteriori informazioni, puoi contattare il responsabile del progetto:</p>
+            <p><strong>Prof. Habimana Jean Paul</strong></p>
+            <p>Email: <a href="mailto:japohab@yahoo.fr">japohab@yahoo.fr</a></p>
+            <p>Oppure partecipa alla riunione introduttiva l'11 ottobre 2024 alle ore 15:00 presso la Scuola Europa di Milano.</p>
+        </div>
+    </section>
+
+    <script>
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function switchLanguage(language) {
+            // Placeholder function for switching language
+            alert('Language switch to ' + language + ' is under construction.');
+        }
+    </script>
+</body>
+</html>

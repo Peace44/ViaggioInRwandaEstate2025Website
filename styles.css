@@ -1,0 +1,202 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f4f8;
+    color: #333;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.1); /* Glassy transparent background */
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: color 0.3s;
+}
+
+header.scrolled {
+    color: black;
+}
+
+header nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+header nav a {
+    color: inherit;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+header nav a:hover {
+    color: #fad201;
+}
+
+.hero-section {
+    background: url('images/Kigali.png') no-repeat center center/cover;
+    color: white;
+    height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 1.5em;
+    margin-bottom: 30px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #ff7f50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #ff4500;
+}
+
+.language-selector {
+    margin-top: 20px;
+}
+
+.language-selector a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+
+.language-selector a:hover {
+    color: #ff7f50;
+}
+
+.about-section, .program-section, .objectives-section, .signup-section, .contact-section {
+    padding: 60px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+}
+
+h2 {
+    color: #ff4500;
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+ul li {
+    margin-bottom: 15px;
+    font-size: 1.1em;
+}
+
+.gallery-section {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: #e9f5f9;
+}
+
+.gallery-images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.gallery-images img {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+form input, form textarea {
+    padding: 10px;
+    font-size: 1em;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    align-self: flex-start;
+    background-color: #ff4500;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #ff7f50;
+}
+
+.contact-content p a {
+    color: #ff4500;
+    text-decoration: none;
+}
+
+.contact-content p a:hover {
+    text-decoration: underline;
+}
+
+/* JavaScript to change header color when scrolling */
+<script>
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('header');
+        const whiteBackgroundSections = document.querySelectorAll('.about-section, .program-section, .objectives-section, .signup-section, .contact-section');
+        let headerTextColorBlack = false;
+
+        whiteBackgroundSections.forEach(section => {
+            const rect = section.getBoundingClientRect();
+            if (rect.top <= 60 && rect.bottom >= 60) {
+                headerTextColorBlack = true;
+            }
+        });
+
+        if (headerTextColorBlack) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+</script>
