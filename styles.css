@@ -154,6 +154,7 @@ form {
 form label {
     margin: 10px 0 5px;
     font-weight: bold;
+    font-size: 0.9em;
 }
 
 form input, form textarea {
@@ -186,6 +187,32 @@ form button:hover {
 .contact-content p a:hover {
     text-decoration: underline;
 }
+
+/* Media query for mobile responsiveness */
+@media (max-width: 768px) {
+    header nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .hero-content h1 {
+        font-size: 2em;
+    }
+
+    .hero-content p {
+        font-size: 1em;
+    }
+
+    .gallery-images img {
+        width: 120px;
+        height: 100px;
+    }
+
+    form label, form input, form textarea {
+        font-size: 0.9em;
+    }
+}
+
 
 /* JavaScript to change header color when scrolling */
 /* <script>
