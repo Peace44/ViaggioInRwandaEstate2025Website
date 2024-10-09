@@ -101,7 +101,7 @@ button:hover {
     color: #ff7f50;
 }
 
-.about-section, .program-section, .objectives-section, .signup-section, .contact-section {
+.about-section, .program-section, .objectives-section, .signup-section {
     padding: 60px 20px;
     max-width: 800px;
     margin: 0 auto;
@@ -189,6 +189,38 @@ form button:hover {
     background-color: #ff7f50;
 }
 
+.contact-section {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.background-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+    z-index: 0;  /* Place it behind the content */
+}
+
+.contact-content {
+    position: relative;
+    z-index: 1;  /* Place content above the video */
+    background: rgba(0, 0, 0, 0.5); /* Optional: Add a semi-transparent background for readability */
+    padding: 20px;
+    border-radius: 8px;
+}
+
 .contact-content p a {
     color: #ff4500;
     text-decoration: none;
@@ -196,6 +228,32 @@ form button:hover {
 
 .contact-content p a:hover {
     text-decoration: underline;
+}
+
+.whatsapp-button {
+    display: inline-block;
+    align-items: center; /* Align icon and text vertically */
+    background-color: #25D366; /* WhatsApp green color */
+    color: white;
+    padding: 12px 20px; /* Reduce padding for better alignment */
+    font-size: 1em;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    line-height: 1; /* Ensure text and icon align vertically */
+}
+
+.whatsapp-button:hover {
+    background-color: #1ebe57;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.whatsapp-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    vertical-align: middle; /* Align the icon vertically with the text */
 }
 
 /* Mobile-friendly header */
@@ -255,3 +313,4 @@ form button:hover {
         font-weight: bold;
     }
 }
+
