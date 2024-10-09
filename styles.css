@@ -250,9 +250,6 @@ form button:hover {
 }
 
 .whatsapp-icon {
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
     vertical-align: middle; /* Align the icon vertically with the text */
 }
 
