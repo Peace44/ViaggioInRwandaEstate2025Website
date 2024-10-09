@@ -13,7 +13,7 @@ header {
     width: 100%;
     background-color: rgba(255, 255, 255, 0.1); /* Glassy transparent background */
     backdrop-filter: blur(10px);
-    color: cyan;
+    color: black;
     padding: 10px 0;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -25,11 +25,11 @@ header.scrolled {
     color: black;
 }
 
-header nav {
+/* header nav {
     display: flex;
     justify-content: center;
     gap: 20px;
-}
+} */
 
 header nav a {
     color: inherit;
@@ -38,8 +38,13 @@ header nav a {
     transition: color 0.3s;
 }
 
+header nav a.active {
+    color: #ff7f50;
+    text-decoration: underline;
+}
+
 header nav a:hover {
-    color: #fad201;
+    color: #ff7f50;
 }
 
 .hero-section {
@@ -53,8 +58,12 @@ header nav a:hover {
 }
 
 .hero-content h1 {
-    font-size: 3em;
+    font-size: 2.71em;
     margin-bottom: 20px;
+}
+
+.hero-content h2 {
+    color: white;
 }
 
 .hero-content p {
@@ -70,6 +79,7 @@ button {
     border: none;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-bottom: 23px;
 }
 
 button:hover {
@@ -188,50 +198,60 @@ form button:hover {
     text-decoration: underline;
 }
 
-/* Media query for mobile responsiveness */
+/* Mobile-friendly header */
 @media (max-width: 768px) {
+    header {
+        position: fixed; /* Keeps the header at the top of the screen */
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(255, 255, 255, 0.1); /* Glassy transparent background */
+        z-index: 1000; /* Ensures the header stays above other content */
+    }
+
     header nav {
+        display: none;
         flex-direction: column;
-        gap: 10px;
+        gap: 23px;
+        background-color: rgba(255, 255, 255, 0.9);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        padding: 10px 0;
+        border-radius: 0 0 10px 10px;
+        font-size: large;
+        font-weight: bold;
     }
 
-    .hero-content h1 {
-        font-size: 2em;
+    header.show-nav nav {
+        display: flex;
     }
 
-    .hero-content p {
-        font-size: 1em;
-    }
-
-    .gallery-images img {
-        width: 120px;
-        height: 100px;
-    }
-
-    form label, form input, form textarea {
-        font-size: 0.9em;
+    .menu-toggle {
+        display: block;
+        font-size: 1.8em;
+        position: fixed; /* Fixes the toggle icon in place */
+        right: 20px;
+        top: 15px;
+        cursor: pointer;
+        z-index: 1100; /* Keeps the menu toggle button above other elements */
+        color: #ff7f50;
+        background-color: rgba(255, 255, 255, 0.618);
     }
 }
 
+/* For Desktop Header */
+@media (min-width: 769px) {
+    .menu-toggle {
+        display: none;
+    }
 
-/* JavaScript to change header color when scrolling */
-/* <script>
-    window.addEventListener('scroll', function() {
-        const header = document.querySelector('header');
-        const whiteBackgroundSections = document.querySelectorAll('.about-section, .program-section, .objectives-section, .signup-section, .contact-section');
-        let headerTextColorBlack = false;
-
-        whiteBackgroundSections.forEach(section => {
-            const rect = section.getBoundingClientRect();
-            if (rect.top <= 60 && rect.bottom >= 60) {
-                headerTextColorBlack = true;
-            }
-        });
-
-        if (headerTextColorBlack) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    });
-</script> */
+    header nav {
+        display: flex;
+        justify-content: center;
+        gap: 37px;
+        font-size: large;
+        font-weight: bold;
+    }
+}

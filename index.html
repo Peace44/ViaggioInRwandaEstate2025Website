@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Viaggio in Rwanda - Estate 2025: Un'opportunità unica di volontariato e scoperta in Rwanda.">
+    <meta name="keywords" content="Viaggio, Rwanda, Estate 2025, Volontariato, Scoperta, Cultura Africana">
     <title>Viaggio in Rwanda - Estate 2025</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -10,26 +12,25 @@
 <body>
     <!-- Fixed Header with Navigation Links -->
     <header>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div> 
         <nav>
-            <a href="#hero" onclick="scrollToSection('hero')">Home</a>
-            <a href="#about" onclick="scrollToSection('about')">Il Progetto</a>
-            <a href="#program" onclick="scrollToSection('program')">Programma</a>
-            <a href="#objectives" onclick="scrollToSection('objectives')">Obiettivi e Attività</a>
-            <a href="#gallery" onclick="scrollToSection('gallery')">Galleria</a>
-            <a href="#signup" onclick="scrollToSection('signup')">Iscrizione</a>
-            <a href="#contact" onclick="scrollToSection('contact')">Contatti</a>
+            <a href="#hero" onclick="scrollToSection('hero')" aria-label="Home">Home</a>
+            <a href="#about" onclick="scrollToSection('about')" aria-label="Il Progetto">Il Progetto</a>
+            <a href="#program" onclick="scrollToSection('program')" aria-label="Programma">Programma</a>
+            <a href="#objectives" onclick="scrollToSection('objectives')" aria-label="Obiettivi e Attività">Obiettivi e Attività</a>
+            <a href="#gallery" onclick="scrollToSection('gallery')" aria-label="Galleria">Galleria</a>
+            <a href="#signup" onclick="scrollToSection('signup')" aria-label="Iscrizione">Iscrizione</a>
+            <a href="#contact" onclick="scrollToSection('contact')" aria-label="Contatti">Contatti</a>
         </nav>
     </header>
 
     <!-- Hero Section -->
     <section id="hero" class="hero-section">
         <div class="hero-content">
-            <h1>Viaggio in Rwanda - Estate 2025</h1>
+            <h1>Viaggio in Rwanda</h1>
+            <h2>Estate 2025</h2>
             <p>Unisciti a noi per un'esperienza indimenticabile di volontariato e scoperta in Rwanda!</p>
-            <button onclick="scrollToSection('about')">Scopri di più</button>
-            <div class="language-selector">
-                <a href="#" onclick="switchLanguage('it')">Italiano</a> | <a href="#" onclick="switchLanguage('en')">English</a>
-            </div>
+            <button onclick="scrollToSection('about')" aria-label="Scopri di più sul progetto">Scopri di più</button>
         </div>
     </section>
 
@@ -76,10 +77,10 @@
             <h2>Galleria</h2>
             <p>Scopri alcuni momenti che potrai vivere durante il viaggio in Rwanda!</p>
             <div class="gallery-images">
-                <img src="images/gallery1.jpg" alt="Paesaggio del Rwanda">
-                <img src="images/gallery2.jpg" alt="Attività di volontariato">
-                <img src="images/gallery3.jpg" alt="Fauna selvatica nel Parco di Akagera">
-                <img src="images/gallery4.jpg" alt="Studenti della scuola di Bumazi">
+                <img src="images/gallery1.jpg" alt="Paesaggio del Rwanda" loading="lazy">
+                <img src="images/gallery2.jpg" alt="Attività di volontariato" loading="lazy">
+                <img src="images/gallery3.jpg" alt="Fauna selvatica nel Parco di Akagera" loading="lazy">
+                <img src="images/gallery4.jpg" alt="Studenti della scuola di Bumazi" loading="lazy">
             </div>
         </div>
     </section>
@@ -119,14 +120,54 @@
     </section>
 
     <script>
+        function toggleMenu() {
+            const header = document.querySelector('header');
+            const menuToggle = document.querySelector('.menu-toggle');
+
+            header.classList.toggle('show-nav');
+
+            // Toggle the menu icon between '☰' and '✕'
+            menuToggle.innerHTML = header.classList.contains('show-nav') ? '✕' : '☰';
+        }
+        
+        // Close the menu when a link is clicked
+        document.querySelectorAll('header nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                const header = document.querySelector('header');
+                const menuToggle = document.querySelector('.menu-toggle');
+
+                header.classList.remove('show-nav'); // Hide the menu after clicking
+                menuToggle.innerHTML = '☰';  // Reset to menu icon
+            });
+        });
+
         function scrollToSection(sectionId) {
             document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
         }
 
-        function switchLanguage(language) {
-            // Placeholder function for switching language
-            alert('Language switch to ' + language + ' is under construction.');
+        function highlightCurrentSection(sectionId) {
+            const navLinks = document.querySelectorAll('header nav a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${sectionId}`) {
+                    link.classList.add('active');
+                }
+            });
         }
+
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            let currentSectionId = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 50;
+                if (window.scrollY >= sectionTop) {
+                    currentSectionId = section.getAttribute('id');
+                }
+            });
+
+            highlightCurrentSection(currentSectionId);
+        });
     </script>
 </body>
 </html>
