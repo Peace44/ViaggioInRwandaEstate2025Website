@@ -180,28 +180,24 @@ ul li {
 }
 
 .gallery-section {
-    padding: 60px 20px;
-    text-align: center;
-    background-color: #e9f5f9;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+    padding: 20px;
+    background-color: #f4f4f4;
     height: 100vh;
-    display: flex;
+
+    /* text-align: center;
     flex-direction: column;
-    justify-content: center;
+    justify-content: center; */
 }
 
-.gallery-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
-}
-
+/* General styling for each media box */
 .media-item {
-    flex: 1 1 calc(33.333% - 40px); /* Ensures three items per row with space between */
-    max-width: calc(33.333% - 40px);
-    box-sizing: border-box;
-    margin: 20px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 form {
