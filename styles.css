@@ -130,6 +130,40 @@ button:hover {
     justify-content: center;
 }
 
+.day-section {
+    padding: 40px 20px;
+    margin-bottom: 40px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.day-section h3 {
+    color: #ff4500;
+    margin-bottom: 15px;
+}
+
+.day-section p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.day-section .day-image, .day-section .day-video {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 15px;
+}
+
+.responsive-img {
+    max-width: 85%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
 h2 {
     color: #ff4500;
     margin-bottom: 20px;
@@ -155,7 +189,7 @@ ul li {
     justify-content: center;
 }
 
-.gallery-images {
+.gallery-row {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -163,12 +197,11 @@ ul li {
     margin-top: 20px;
 }
 
-.gallery-images img {
-    width: 200px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.media-item {
+    flex: 1 1 calc(33.333% - 40px); /* Ensures three items per row with space between */
+    max-width: calc(33.333% - 40px);
+    box-sizing: border-box;
+    margin: 20px;
 }
 
 form {
@@ -315,6 +348,11 @@ form button:hover {
         z-index: 1100; /* Keeps the menu toggle button above other elements */
         color: #ff7f50;
         background-color: rgba(255, 255, 255, 0.618);
+    }
+
+    .media-item {
+        flex: 1 1 100%; /* Stacks items on smaller screens */
+        max-width: 100%;
     }
 }
 
