@@ -250,9 +250,15 @@ form button:hover {
 
 .signup-section {
     background-image: url(images/traditionalRwandanDance.jpg);
-    background-size: contain;
+    /* background-size: contain;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: center; */
+    color: white;
+    height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: center;
 }
 
 .signup-section, .contact-section{
