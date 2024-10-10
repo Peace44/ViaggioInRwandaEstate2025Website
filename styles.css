@@ -39,12 +39,12 @@ header nav a {
 }
 
 header nav a.active {
-    color: #ff7f50;
+    color: rgb(0, 218, 255);
     text-decoration: underline;
 }
 
 header nav a:hover {
-    color: #ff7f50;
+    color: rgb(0, 218, 255);
 }
 
 .hero-section {
@@ -74,7 +74,7 @@ header nav a:hover {
 button {
     padding: 10px 20px;
     font-size: 1em;
-    background-color: #ff7f50;
+    background-color: #ff4500;
     color: white;
     border: none;
     cursor: pointer;
@@ -83,7 +83,7 @@ button {
 }
 
 button:hover {
-    background-color: #ff4500; 
+    background-color: #ff0000; 
 }
 
 .form-button {
@@ -91,29 +91,14 @@ button:hover {
     padding: 10px 20px;
     margin: 20px 0;
     text-decoration: none;
-    color: #fff;
-    background-color: rgb(0, 218, 255);
+    color: black;
+    background-color: yellow;
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
 
 .form-button:hover {
-    background-color: #0056b3 !important;
-}
-
-.language-selector {
-    margin-top: 20px;
-}
-
-.language-selector a {
-    color: white;
-    text-decoration: none;
-    margin: 0 10px;
-    transition: color 0.3s;
-}
-
-.language-selector a:hover {
-    color: #ff7f50;
+    background-color: orange;
 }
 
 .about-section, .program-section, .objectives-section {
@@ -165,7 +150,7 @@ button:hover {
 }
 
 h2 {
-    color: #ff4500;
+    color: rgb(0, 218, 255);
     margin-bottom: 20px;
 }
 
@@ -180,16 +165,20 @@ ul li {
 }
 
 .gallery-section {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
     background-color: #f4f4f4;
-    height: 100vh;
+    height: auto;
+    text-align: center;
+}
 
-    /* text-align: center;
-    flex-direction: column;
-    justify-content: center; */
+/* Flexbox container to arrange media in a row */
+.gallery-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 /* General styling for each media box */
@@ -197,40 +186,8 @@ ul li {
     background-color: white;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-form label {
-    margin: 10px 0 5px;
-    font-weight: bold;
-    font-size: 0.9em;
-}
-
-form input, form textarea {
-    padding: 10px;
-    font-size: 1em;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-form button {
-    align-self: flex-start;
-    background-color: #ff4500;
-    border: none;
-    color: white;
-    cursor: pointer;
-    padding: 10px 20px;
-    transition: background-color 0.3s;
-}
-
-form button:hover {
-    background-color: #ff7f50;
+    flex: 1 1 45%;
+    box-sizing: border-box;
 }
 
 .background-video {
@@ -239,12 +196,12 @@ form button:hover {
     left: 50%;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    /* object-fit: cover; */
     transform: translate(-50%, -50%);
     z-index: 0;  /* Place it behind the content */
 }
 
-.signup-section {
+.contact-section {
     margin: 0;
     padding: 0;
     background-image: url(images/traditionalRwandanDance.jpg);
@@ -276,7 +233,7 @@ form button:hover {
 }
 
 .signup-content p a, .contact-content p a {
-    color: #ff4500;
+    color: #25D366;
     text-decoration: none;
 }
 
@@ -345,12 +302,13 @@ form button:hover {
         top: 15px;
         cursor: pointer;
         z-index: 1100; /* Keeps the menu toggle button above other elements */
-        color: #ff7f50;
+        color: rgb(0, 218, 255);
         background-color: rgba(255, 255, 255, 0.618);
     }
 
     .media-item {
         flex: 1 1 100%; /* Stacks items on smaller screens */
+        margin-bottom: 20px;
         max-width: 100%;
     }
 }
