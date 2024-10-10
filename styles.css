@@ -308,8 +308,9 @@ ul li {
 
     .media-item {
         flex: 1 1 100%; /* Stacks items on smaller screens */
-        margin-bottom: 20px;
-        max-width: 100%;
+        width: 100%;
+        height: 100%;
+        padding: 0px;
     }
 }
 
