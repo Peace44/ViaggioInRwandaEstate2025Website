@@ -101,7 +101,7 @@ button:hover {
     background-color: orange;
 }
 
-.about-section, .program-section, .objectives-section {
+.program-section {
     position: relative;
     padding: 20px;
     max-width: 800px;
@@ -175,7 +175,7 @@ button:hover {
 
  .responsive-img {
     width: 100%;
-    object-fit: contain;
+    object-fit: cover;
     height: auto;
     display: block;
     flex-shrink: 0;
@@ -217,7 +217,7 @@ h2 {
     margin: 0 auto;
     padding: 20px;
     background-color: #f4f4f4;
-    height: auto;
+    height: 100%;
     text-align: center;
 }
 
@@ -248,6 +248,15 @@ h2 {
     z-index: 0;  /* Place it behind the content */
 }
 
+.about-section {
+    margin: 0;
+    padding: 0;
+    background-image: url(images/inyambo.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center; 
+}
+
 .contact-section {
     margin: 0;
     padding: 0;
@@ -257,7 +266,16 @@ h2 {
     background-position: center;    
 }
 
-.signup-section, .contact-section{
+.objectives-section {
+    margin: 0;
+    padding: 0;
+    background-image: url(images/uduseke.JPG);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;    
+}
+
+.signup-section, .contact-section, .objectives-section, .about-section {
     position: relative;
     height: 100vh;
     width: 100vw;
@@ -349,7 +367,7 @@ h2 {
         top: 15px;
         cursor: pointer;
         z-index: 1100; /* Keeps the menu toggle button above other elements */
-        color: rgb(0, 218, 255);
+        color: #ff4500;
         background-color: rgba(255, 255, 255, 0.618);
     }
 
