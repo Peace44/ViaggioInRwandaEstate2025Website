@@ -43,33 +43,57 @@
     </section>
 
     <!-- Program Overview Section -->
-    <!-- <section id="program" class="program-section">
-        <div class="program-content">
+    <section id="program" class="program-section">
             <h2>Programma del Viaggio</h2>
-            <div class="day-section">
-                <h3>Partenza da Milano</h3>
-                <p>Partenza dall'aeroporto di Milano per Kigali, la capitale del Rwanda dal 1962 e città più popolosa con oltre 1,7 milioni di abitanti. 
-                    Situata al centro del paese a 1.567 m di altitudine, Kigali è un centro economico e culturale in rapido sviluppo. 
-                    I partecipanti avranno modo di conoscersi e prepararsi per l'avventura che li attende, 
-                    mentre iniziano il loro viaggio verso una nuova esperienza culturale e di volontariato.
-                </p>
-                <div class="media">
+
+            <button class="swipe-left" onclick="scrollProgramLeft()">←</button>
+
+            <div class="swipe-container">
+                <div class="day-section">
+                    <h3>Giorno 1: Partenza da Milano</h3>
+                    <div class="text">
+                        Volo da Milano a <a href="https://it.wikipedia.org/wiki/Kigali" target="_blank">Kigali</a>, capitale del Rwanda dal 1962 e città più popolosa (1,7 milioni di abitanti). 
+                        Kigali, al centro del paese a 1.567 m di altitudine, è un centro economico e culturale in rapido sviluppo. 
+                        I partecipanti avranno modo di conoscersi e prepararsi per l'avventura, 
+                        iniziando il loro viaggio di esperienza culturale e volontariato.
+                    </div>
                     <img src="images/rwandair.jpg" alt="Partenza da Milano" class="responsive-img">
                 </div>
+                
+                <div class="day-section">
+                    <h3>Giorno 2: Arrivo a Kigali e Visita Storica</h3>
+                    <div class="text">
+                        Arrivo a Kigali e visita al 
+                        <a href="https://www.kgm.rw" target="_blank">Memoriale del Genocidio dei Tutsi a Gisozi</a>, 
+                        luogo di memoria dedicato alle vittime del genocidio. 
+                        Il Memoriale offre un'esperienza intensa per i visitatori, 
+                        promuovendo riconciliazione e pace attraverso l'educazione. 
+                        I partecipanti potranno riflettere sui temi della memoria, 
+                        partecipando a una discussione e un'attività di gruppo per elaborare le emozioni.
+                    </div>
+                    <img src="images/KigaliGenocideMemorial.jpg" alt="Kigali Genocide Memorial" style="width: 43%;" class="responsive-img">
+                </div>
+
+                <div class="day-section">
+                    <h3>Giorno 3: Visita al Parco dell'Akagera</h3>
+                    <div class="text">
+                        Giornata al <a href="https://visitrwanda.com/destinations/akagera-national-park/" target="_blank">Parco Nazionale dell'Akagera</a>, 
+                        la più grande zona umida protetta dell'Africa centrale e ultimo rifugio per specie della savana in Rwanda. 
+                        I partecipanti osserveranno la fauna selvatica durante il safari, 
+                        discutendo della conservazione ambientale e della biodiversità del Rwanda. 
+                        Pranzo al sacco e attività di esplorazione della natura.
+                    </div>
+                    <img src="images/AkageraNationalPark.jpg" alt="Akagera National Park" class="responsive-img">
+                </div>
+                    <!-- <div class="media">
+                        <img src="images/rwandair.jpg" alt="Partenza da Milano" class="responsive-img">
+                    </div> -->
+                </div>
+                
             </div>
 
-            <ul>
-                <li><strong>16 luglio 2025:</strong> Partenza da Milano.</li>
-                <li><strong>17 luglio 2025:</strong> Arrivo a Kigali, visita al Memoriale del Genocidio dei Tutsi a Gisozi.</li>
-                <li><strong>18 luglio 2025:</strong> Visita al Parco di Akagera, osservazione della fauna selvatica.</li>
-                <li><strong>19 luglio 2025:</strong> Visita ai Musei Nazionali di Nyanza e Butare.</li>
-                <li><strong>20-24 luglio 2025:</strong> Esperienza alla scuola primaria di Bumazi, attività di volontariato e insegnamento.</li>
-                <li><strong>25 luglio 2025:</strong> Partenza per Kibuye/Butare.</li>
-                <li><strong>26 luglio 2025:</strong> Attività di relax a Kigali, cena di addio.</li>
-                <li><strong>27 luglio 2025:</strong> Rientro in Italia.</li>
-            </ul>
-        </div>
-    </section> -->
+        <button class="swipe-right" onclick="scrollProgramRight()">→</button>
+    </section>
 
     <!-- Objectives and Activities Section -->
     <section id="objectives" class="objectives-section">
@@ -170,7 +194,15 @@
         });
 
         function scrollToSection(sectionId) {
-            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+            const offset = document.querySelector('header').offsetHeight;
+            const element = document.getElementById(sectionId);
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
         }
 
         function highlightCurrentSection(sectionId) {
@@ -185,10 +217,11 @@
 
         window.addEventListener('scroll', () => {
             const sections = document.querySelectorAll('section');
+            const offset = document.querySelector('header').offsetHeight + 50;
             let currentSectionId = '';
 
             sections.forEach(section => {
-                const sectionTop = section.offsetTop - 50;
+                const sectionTop = section.offsetTop - offset;
                 if (window.scrollY >= sectionTop) {
                     currentSectionId = section.getAttribute('id');
                 }
@@ -196,6 +229,25 @@
 
             highlightCurrentSection(currentSectionId);
         });
+
+        let container = document.querySelector('.swipe-container');
+        let daySection = document.querySelector('.day-section');
+        let daySectionWidth = daySection.offsetWidth;
+
+        window.addEventListener('resize', () => {
+            daySectionWidth = daySection.offsetWidth;
+        });
+
+        function scrollProgramLeft() {
+            container.scrollBy({ left: -daySectionWidth, behavior: 'smooth' });
+        }
+
+        function scrollProgramRight() {
+            container.scrollBy({ left: daySectionWidth, behavior: 'smooth' });
+        }
+
+        
+
     </script>
 </body>
 </html>
