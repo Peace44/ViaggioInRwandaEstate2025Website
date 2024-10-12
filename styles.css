@@ -25,12 +25,6 @@ header.scrolled {
     color: black;
 }
 
-/* header nav {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-} */
-
 header nav a {
     color: inherit;
     text-decoration: none;
@@ -125,18 +119,11 @@ button:hover {
     overflow-x: scroll;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    /* gap: 20px; */
-    /* width: 100vw; */
     scrollbar-width: none;
     z-index: 1;
 }
 
 .day-section {
-    /* min-width: 100vw; */
-    /* scroll-snap-align: start;
-    flex-shrink: 0;
-    padding: 20px;
-    box-sizing: border-box; */
     flex: 0 0 100%;
     scroll-snap-align: start;
     overflow: hidden;
@@ -161,17 +148,6 @@ button:hover {
     font-size: 0.9em;  /* Optional: style the text like a paragraph */
     line-height: 1.4;  /* Optional: line height for readability */
 }
-
-
-/* .day-section .day-image, .day-section .day-video {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 15px;
-}
-
- */
 
  .responsive-img {
     width: 100%;
@@ -399,19 +375,12 @@ h2 {
     }
 
     .responsive-img {
-        /* width: 100%;
-        object-fit: cover;
-        height: 71%;
-        display: block;
-        flex-shrink: 0;
-        margin: 0 0 0 0; */
-
-        height: 53%;
+        height: 50%;
         object-fit: contain;
     }
 
     .half-responsive-img {
-        height: 26.5%;
+        height: 25%;
     }
 }
 
