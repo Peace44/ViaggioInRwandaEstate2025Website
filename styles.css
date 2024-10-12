@@ -144,7 +144,7 @@ button:hover {
     white-space: normal;  /* Ensure text wraps inside divs */
     word-wrap: break-word;  /* Handle long words or URLs */
     overflow-wrap: break-word;  /* Ensure long words break correctly */
-    margin: 0 0 0 0;  /* Add margin to separate text from other content */
+    margin: 0 5px 0 5px;  /* Add margin to separate text from other content */
     font-size: 0.9em;  /* Optional: style the text like a paragraph */
     line-height: 1.4;  /* Optional: line height for readability */
 }
