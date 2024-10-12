@@ -83,7 +83,7 @@ button {
 }
 
 button:hover {
-    background-color: #ff0000; 
+    background-color: #ff0000;
 }
 
 .form-button {
@@ -176,10 +176,19 @@ button:hover {
  .responsive-img {
     width: 100%;
     object-fit: cover;
-    height: auto;
+    height: 71%;
     display: block;
     flex-shrink: 0;
-    margin: auto;
+    margin: 0 0 0 0;
+}
+
+.half-responsive-img {
+    width: 100%;
+    object-fit: cover;
+    height: 35.5%;
+    display: block;
+    flex-shrink: 0;
+    margin: 0 0 0 0;
 }
 
 .swipe-container::-webkit-scrollbar {
@@ -197,6 +206,7 @@ button:hover {
     margin: 0 10px;
     cursor: pointer;
     z-index: 10;
+    top: 53%;
 }
 
 .swipe-left {
@@ -215,7 +225,7 @@ h2 {
 .gallery-section {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 10px;
     background-color: #f4f4f4;
     height: 100%;
     text-align: center;
@@ -254,7 +264,7 @@ h2 {
     background-image: url(images/inyambo.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center; 
+    background-position: center;
 }
 
 .contact-section {
@@ -263,7 +273,7 @@ h2 {
     background-image: url(images/traditionalRwandanDance.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;    
+    background-position: center;
 }
 
 .objectives-section {
@@ -272,7 +282,7 @@ h2 {
     background-image: url(images/uduseke.JPG);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;    
+    background-position: center;
 }
 
 .signup-section, .contact-section, .objectives-section, .about-section {
@@ -371,10 +381,14 @@ h2 {
         background-color: rgba(255, 255, 255, 0.618);
     }
 
+    .gallery-section {
+        max-height: 1200px;
+    }
+
     .media-item {
         flex: 1 1 100%; /* Stacks items on smaller screens */
         width: 100%;
-        height: 100%;
+        height: 505px;
         padding: 0px;
         margin: 0 0 0 0;
     }
@@ -385,18 +399,19 @@ h2 {
     }
 
     .responsive-img {
-        width: 100%;
-        object-fit: contain;
-        height: 61%;
+        /* width: 100%;
+        object-fit: cover;
+        height: 71%;
         display: block;
         flex-shrink: 0;
-        margin: 0px auto 3% auto;
+        margin: 0 0 0 0; */
+
+        height: 53%;
+        object-fit: contain;
     }
 
-    .iframe {
-        width: auto;
-        height: 100%; 
-        margin: 0;
+    .half-responsive-img {
+        height: 26.5%;
     }
 }
 
