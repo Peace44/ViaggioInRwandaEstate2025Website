@@ -17,7 +17,8 @@ class GoogleDriveIntegration {
         };
         
         this.isInitialized = false;
-        this.isSignedIn = false;
+        this.accessToken = null;
+        this.tokenClient = null;
     }
 
     async initialize() {
@@ -28,24 +29,42 @@ class GoogleDriveIntegration {
                 return false;
             }
 
-            await this.loadGoogleAPIs();
+            // Load both GAPI and GIS libraries
+            await Promise.all([
+                this.loadGoogleAPIs(),
+                this.loadGoogleIdentityServices()
+            ]);
             
-            await new Promise((resolve, reject) => {
-                gapi.load('auth2', resolve, reject);
-            });
+            // Initialize GAPI client without discovery docs (fallback approach)
+            try {
+                await gapi.client.init({
+                    apiKey: this.API_KEY,
+                    discoveryDocs: [this.DISCOVERY_DOC]
+                });
+                console.log('✅ GAPI initialized with discovery docs');
+            } catch (discoveryError) {
+                console.log('⚠️ Discovery docs failed, using direct API calls:', discoveryError.message);
+                // Initialize without discovery docs
+                await gapi.client.init({
+                    apiKey: this.API_KEY
+                });
+                console.log('✅ GAPI initialized without discovery docs');
+            }
             
-            await gapi.client.init({
-                apiKey: this.API_KEY,
-                clientId: this.CLIENT_ID,
-                discoveryDocs: [this.DISCOVERY_DOC],
+            // Initialize GIS token client
+            this.tokenClient = google.accounts.oauth2.initTokenClient({
+                client_id: this.CLIENT_ID,
                 scope: this.SCOPES,
-                cookiepolicy: 'single_host_origin'
+                callback: (response) => {
+                    if (response.access_token) {
+                        this.accessToken = response.access_token;
+                        console.log('✅ Google Drive authentication successful');
+                    }
+                }
             });
             
             this.isInitialized = true;
-            this.isSignedIn = gapi.auth2.getAuthInstance().isSignedIn.get();
-            
-            console.log('Google Drive API initialized successfully');
+            console.log('Google Drive API initialized successfully (GIS)');
             return true;
         } catch (error) {
             console.error('Error initializing Google Drive API:', error);
@@ -63,8 +82,23 @@ class GoogleDriveIntegration {
             const script = document.createElement('script');
             script.src = 'https://apis.google.com/js/api.js';
             script.onload = () => {
-                gapi.load('client:auth2', resolve);
+                gapi.load('client', resolve);
             };
+            script.onerror = reject;
+            document.head.appendChild(script);
+        });
+    }
+
+    async loadGoogleIdentityServices() {
+        return new Promise((resolve, reject) => {
+            if (typeof google !== 'undefined' && google.accounts) {
+                resolve();
+                return;
+            }
+
+            const script = document.createElement('script');
+            script.src = 'https://accounts.google.com/gsi/client';
+            script.onload = resolve;
             script.onerror = reject;
             document.head.appendChild(script);
         });
@@ -76,10 +110,22 @@ class GoogleDriveIntegration {
         }
 
         try {
-            const authInstance = gapi.auth2.getAuthInstance();
-            await authInstance.signIn();
-            this.isSignedIn = true;
-            return true;
+            return new Promise((resolve) => {
+                // Update the callback to resolve the promise
+                this.tokenClient.callback = (response) => {
+                    if (response.access_token) {
+                        this.accessToken = response.access_token;
+                        console.log('✅ Google Drive authentication successful');
+                        resolve(true);
+                    } else {
+                        console.error('Authentication failed:', response);
+                        resolve(false);
+                    }
+                };
+                
+                // Request access token
+                this.tokenClient.requestAccessToken();
+            });
         } catch (error) {
             console.error('Error signing in:', error);
             return false;
@@ -88,35 +134,72 @@ class GoogleDriveIntegration {
 
     async getFolderContents(folderId) {
         try {
+            // Try using GAPI client first (if discovery docs worked)
+            if (gapi.client.drive && gapi.client.drive.files) {
+                const response = await gapi.client.drive.files.list({
+                    q: `'${folderId}' in parents and trashed=false`,
+                    fields: 'nextPageToken, files(id, name, mimeType, webViewLink, webContentLink, thumbnailLink, createdTime, parents, description)',
+                    orderBy: 'createdTime desc',
+                    key: this.API_KEY
+                });
+                return response.result.files;
+            }
+        } catch (error) {
+            console.log('GAPI client method failed, trying direct HTTP request...');
+        }
+
+        // Fallback: Direct HTTP request to Google Drive API
+        try {
             // Try without authentication first (for public folders)
-            const response = await gapi.client.drive.files.list({
+            const params = new URLSearchParams({
                 q: `'${folderId}' in parents and trashed=false`,
                 fields: 'nextPageToken, files(id, name, mimeType, webViewLink, webContentLink, thumbnailLink, createdTime, parents, description)',
                 orderBy: 'createdTime desc',
                 key: this.API_KEY
             });
 
-            return response.result.files;
-        } catch (error) {
-            console.log('Public access failed, trying with authentication...');
+            let response = await fetch(`https://www.googleapis.com/drive/v3/files?${params}`);
             
-            // Fallback: try with authentication
-            try {
-                if (!this.isSignedIn) {
-                    await this.signIn();
+            if (!response.ok) {
+                console.log('Public access failed, trying with authentication...');
+                
+                // Try with authentication
+                if (!this.accessToken) {
+                    console.log('🔐 No access token found, requesting authentication...');
+                    const signInSuccess = await this.signIn();
+                    if (!signInSuccess) {
+                        console.error('❌ Authentication failed');
+                        return [];
+                    }
+                    console.log('✅ Authentication completed, token obtained');
                 }
 
-                const response = await gapi.client.drive.files.list({
-                    q: `'${folderId}' in parents and trashed=false`,
-                    fields: 'nextPageToken, files(id, name, mimeType, webViewLink, webContentLink, thumbnailLink, createdTime, parents, description)',
-                    orderBy: 'createdTime desc'
+                // Remove the API key and use access token instead
+                params.delete('key');
+                console.log('🔄 Making authenticated request to Google Drive...');
+                response = await fetch(`https://www.googleapis.com/drive/v3/files?${params}`, {
+                    headers: {
+                        'Authorization': `Bearer ${this.accessToken}`,
+                        'Content-Type': 'application/json'
+                    }
                 });
 
-                return response.result.files;
-            } catch (authError) {
-                console.error('Error getting folder contents:', authError);
-                return [];
+                if (response.ok) {
+                    console.log('✅ Authenticated request successful');
+                } else {
+                    console.error('❌ Authenticated request failed:', response.status, response.statusText);
+                }
             }
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            return data.files || [];
+        } catch (error) {
+            console.error('Error getting folder contents:', error);
+            return [];
         }
     }
 
@@ -281,14 +364,42 @@ class GoogleDriveIntegration {
     // Helper method to get public shareable link
     async getPublicLink(fileId) {
         try {
-            // First, try to make the file publicly viewable
-            await gapi.client.drive.permissions.create({
-                fileId: fileId,
-                resource: {
-                    role: 'reader',
-                    type: 'anyone'
+            // Ensure we have authentication
+            if (!this.accessToken) {
+                await this.signIn();
+            }
+
+            // Try using GAPI client first (if available)
+            if (gapi.client.drive && gapi.client.drive.permissions) {
+                gapi.client.setToken({
+                    access_token: this.accessToken
+                });
+
+                await gapi.client.drive.permissions.create({
+                    fileId: fileId,
+                    resource: {
+                        role: 'reader',
+                        type: 'anyone'
+                    }
+                });
+            } else {
+                // Fallback: Direct HTTP request
+                const response = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}/permissions`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${this.accessToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        role: 'reader',
+                        type: 'anyone'
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
-            });
+            }
             
             return `https://drive.google.com/file/d/${fileId}/view`;
         } catch (error) {
