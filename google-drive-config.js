@@ -289,11 +289,21 @@ class GoogleDriveIntegration {
         switch (type) {
             case 'photos':
                 mediaItem.imageUrl = this.getDirectImageLink(file.id);
-                mediaItem.thumbnailUrl = file.thumbnailLink || this.getDirectImageLink(file.id);
+                mediaItem.thumbnailUrl = file.thumbnailLink || this.getThumbnailLink(file.id);
+                console.log('🖼️ Photo URLs:', {
+                    imageUrl: mediaItem.imageUrl,
+                    thumbnailUrl: mediaItem.thumbnailUrl,
+                    originalThumbnail: file.thumbnailLink
+                });
                 break;
             case 'videos':
                 mediaItem.videoUrl = this.getDirectVideoLink(file.id);
                 mediaItem.thumbnailUrl = file.thumbnailLink || 'images/video-placeholder.jpg';
+                console.log('🎥 Video URLs:', {
+                    videoUrl: mediaItem.videoUrl,
+                    thumbnailUrl: mediaItem.thumbnailUrl,
+                    originalThumbnail: file.thumbnailLink
+                });
                 break;
             case 'articles':
                 mediaItem.articleUrl = file.webViewLink;
@@ -306,16 +316,55 @@ class GoogleDriveIntegration {
                 break;
         }
 
+        // Try to make the file public for better access (optional - will fail silently if no permission)
+        try {
+            if (this.accessToken && (type === 'photos' || type === 'videos')) {
+                await this.makeFilePublic(file.id);
+            }
+        } catch (error) {
+            console.log('ℹ️ Could not make file public (this is normal):', file.name);
+        }
+
         console.log('✅ Created media item:', mediaItem);
         return mediaItem;
     }
 
     getDirectImageLink(fileId) {
+        // Multiple fallback options for Google Drive images
         return `https://drive.google.com/uc?export=view&id=${fileId}`;
     }
 
     getDirectVideoLink(fileId) {
-        return `https://drive.google.com/uc?export=download&id=${fileId}`;
+        // For videos, use the preview link which works better for embedding
+        return `https://drive.google.com/file/d/${fileId}/preview`;
+    }
+    
+    // Alternative image URL format
+    getThumbnailLink(fileId) {
+        return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
+    }
+
+    // Helper method to make a file publicly readable
+    async makeFilePublic(fileId) {
+        if (!this.accessToken) return false;
+
+        try {
+            const response = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}/permissions`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${this.accessToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    role: 'reader',
+                    type: 'anyone'
+                })
+            });
+
+            return response.ok;
+        } catch (error) {
+            return false;
+        }
     }
 
     extractTitle(filename) {

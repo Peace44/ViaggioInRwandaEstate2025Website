@@ -353,14 +353,21 @@ class GalleryManager {
         // Create content based on type
         switch(item.type) {
             case 'photos':
-                content.innerHTML = `<img src="${item.imageUrl}" alt="${item.title}">`;
+                content.innerHTML = `
+                    <img src="${item.imageUrl}" alt="${item.title}" 
+                         onerror="console.error('Failed to load image:', '${item.imageUrl}'); this.style.display='none'; this.parentNode.innerHTML='<p>❌ Image failed to load</p>';">
+                `;
                 break;
             case 'videos':
+                // Use iframe for Google Drive videos
                 content.innerHTML = `
-                    <video controls autoplay>
-                        <source src="${item.videoUrl}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                    <iframe src="${item.videoUrl}" 
+                            width="100%" 
+                            height="400" 
+                            frameborder="0" 
+                            allow="autoplay; encrypted-media" 
+                            allowfullscreen>
+                    </iframe>
                 `;
                 break;
             case 'articles':
