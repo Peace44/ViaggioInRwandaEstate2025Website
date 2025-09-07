@@ -215,9 +215,23 @@ class GoogleDriveIntegration {
             const mediaItems = [];
 
             for (const file of files) {
-                const mediaItem = await this.processFile(file, year);
-                if (mediaItem) {
-                    mediaItems.push(mediaItem);
+                // Check if this is a folder
+                if (file.mimeType === 'application/vnd.google-apps.folder') {
+                    console.log(`📁 Found subfolder: ${file.name}, loading its contents...`);
+                    // Recursively load contents of subfolders
+                    const subfolderFiles = await this.getFolderContents(file.id);
+                    for (const subfile of subfolderFiles) {
+                        const mediaItem = await this.processFile(subfile, year);
+                        if (mediaItem) {
+                            mediaItems.push(mediaItem);
+                        }
+                    }
+                } else {
+                    // Process regular files
+                    const mediaItem = await this.processFile(file, year);
+                    if (mediaItem) {
+                        mediaItems.push(mediaItem);
+                    }
                 }
             }
 
@@ -231,6 +245,13 @@ class GoogleDriveIntegration {
     async processFile(file, year) {
         console.log('🔍 Processing file:', file.name, 'MIME:', file.mimeType);
         const mimeType = file.mimeType;
+        
+        // Skip Google Apps folders and other non-media files
+        if (mimeType === 'application/vnd.google-apps.folder') {
+            console.log('⏭️ Skipping folder:', file.name);
+            return null;
+        }
+        
         let type = 'photos'; // default
         
         // Determine media type based on MIME type or file name
@@ -242,6 +263,10 @@ class GoogleDriveIntegration {
             type = 'articles';
         } else if (file.name.toLowerCase().includes('social') || file.name.toLowerCase().includes('instagram')) {
             type = 'social';
+        } else if (!mimeType.startsWith('image/') && !mimeType.startsWith('video/')) {
+            // Skip unsupported file types
+            console.log('⏭️ Skipping unsupported file type:', file.name, mimeType);
+            return null;
         }
         
         console.log('📂 File type determined:', type);
