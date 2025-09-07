@@ -65,7 +65,7 @@ window.addEventListener('scroll', () => {
 
 let container = document.querySelector('.swipe-container');
 let daySection = document.querySelector('.day-section');
-let daySectionWidth = daySection ? daySection.offsetWidth : 0;
+let daySectionWidth = daySection?.offsetWidth || 0;
 
 window.addEventListener('resize', () => {
     if (daySection) {

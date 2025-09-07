@@ -22,16 +22,23 @@ class GalleryManager {
     async loadGalleryData() {
         // Try to load from Google Drive first
         try {
-            const driveIntegration = new GalleryGoogleDriveIntegration(this);
-            await driveIntegration.loadGalleryFromDrive();
-            
-            // If Google Drive data is loaded successfully, return
-            if (this.galleryData && this.galleryData.length > 0) {
-                this.renderGallery();
-                return;
+            // Check if Google Drive integration is available
+            if (typeof window.GalleryGoogleDriveIntegration !== 'undefined') {
+                console.log('🔄 Google Drive integration found, attempting to load...');
+                const driveIntegration = new window.GalleryGoogleDriveIntegration(this);
+                await driveIntegration.loadGalleryFromDrive();
+                
+                // If Google Drive data is loaded successfully, return
+                if (this.galleryData && this.galleryData.length > 0) {
+                    console.log(`✅ Successfully loaded ${this.galleryData.length} items from Google Drive`);
+                    this.renderGallery();
+                    return;
+                }
+            } else {
+                console.log('⚠️ Google Drive integration not available (google-drive-config.js may not be loaded)');
             }
         } catch (error) {
-            console.log('Google Drive not available, using sample data:', error);
+            console.log('❌ Google Drive integration failed, using sample data:', error.message);
         }
         
         // Fallback to sample data if Google Drive fails
