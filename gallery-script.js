@@ -291,7 +291,8 @@ class GalleryManager {
 
         switch(item.type) {
             case 'photos':
-                mediaContent = `<img src="${item.thumbnailUrl}" alt="${item.title}" class="item-image" loading="lazy">`;
+                mediaContent = `<img src="${item.thumbnailUrl}" alt="${item.title}" class="item-image" loading="lazy" 
+                               onerror="console.log('Thumbnail failed for:', '${item.title}'); this.src='images/Kigali.png';">`;
                 itemTypeClass = 'item-photo';
                 break;
             case 'videos':
@@ -355,7 +356,7 @@ class GalleryManager {
             case 'photos':
                 content.innerHTML = `
                     <img src="${item.imageUrl}" alt="${item.title}" 
-                         onerror="console.error('Failed to load image:', '${item.imageUrl}'); this.style.display='none'; this.parentNode.innerHTML='<p>❌ Image failed to load</p>';">
+                         onerror="this.onerror=null; console.log('Trying fallback URL for: ${item.title}'); this.src='${item.thumbnailUrl}'; if(!this.src.includes('thumbnail')) { this.style.display='none'; this.parentNode.innerHTML='<p>❌ Image failed to load: ${item.title}</p>'; }">
                 `;
                 break;
             case 'videos':

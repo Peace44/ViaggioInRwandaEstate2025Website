@@ -288,8 +288,17 @@ class GoogleDriveIntegration {
         // Set URLs based on type
         switch (type) {
             case 'photos':
-                mediaItem.imageUrl = this.getDirectImageLink(file.id);
-                mediaItem.thumbnailUrl = file.thumbnailLink || this.getThumbnailLink(file.id);
+                // Use Google's thumbnail URLs when available, they work better for embedding
+                if (file.thumbnailLink) {
+                    // Use high-res version of Google's thumbnail
+                    const highResThumbnail = file.thumbnailLink.replace('=s220', '=s1000');
+                    mediaItem.imageUrl = highResThumbnail;
+                    mediaItem.thumbnailUrl = file.thumbnailLink;
+                } else {
+                    // Fallback to direct link
+                    mediaItem.imageUrl = this.getDirectImageLink(file.id);
+                    mediaItem.thumbnailUrl = this.getThumbnailLink(file.id);
+                }
                 console.log('🖼️ Photo URLs:', {
                     imageUrl: mediaItem.imageUrl,
                     thumbnailUrl: mediaItem.thumbnailUrl,
