@@ -201,27 +201,105 @@ h2 {
 .gallery-section {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 10px;
+    padding: 40px 20px;
     background-color: #f4f4f4;
-    height: 100%;
     text-align: center;
 }
 
-/* Flexbox container to arrange media in a row */
-.gallery-content {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 20px;
+.gallery-preview {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
-/* General styling for each media box */
-.media-item {
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    flex: 1 1 45%;
-    box-sizing: border-box;
+.gallery-highlight {
+    margin: 30px 0;
+}
+
+.highlight-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.highlight-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.highlight-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.highlight-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.highlight-item:hover .highlight-img {
+    transform: scale(1.05);
+}
+
+.highlight-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    color: white;
+    padding: 30px 20px 20px;
+    transform: translateY(10px);
+    transition: transform 0.3s ease;
+}
+
+.highlight-item:hover .highlight-overlay {
+    transform: translateY(0);
+}
+
+.highlight-overlay h4 {
+    margin: 0 0 8px 0;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.highlight-overlay p {
+    margin: 0;
+    font-size: 0.9em;
+    opacity: 0.9;
+}
+
+.gallery-cta {
+    text-align: center;
+}
+
+.gallery-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, rgb(0, 218, 255), #ff4500);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #ff4500, rgb(0, 218, 255));
 }
 
 .background-video {
@@ -358,15 +436,21 @@ h2 {
     }
 
     .gallery-section {
-        max-height: 1200px;
+        padding: 20px 10px;
     }
 
-    .media-item {
-        flex: 1 1 100%; /* Stacks items on smaller screens */
-        width: 100%;
-        height: 505px;
-        padding: 0px;
-        margin: 0 0 0 0;
+    .gallery-preview {
+        padding: 20px;
+    }
+
+    .highlight-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .gallery-button {
+        padding: 12px 25px;
+        font-size: 1em;
     }
 
     .swipe-left, .swipe-right {

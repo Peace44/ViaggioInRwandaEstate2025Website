@@ -65,16 +65,22 @@ window.addEventListener('scroll', () => {
 
 let container = document.querySelector('.swipe-container');
 let daySection = document.querySelector('.day-section');
-let daySectionWidth = daySection.offsetWidth;
+let daySectionWidth = daySection ? daySection.offsetWidth : 0;
 
 window.addEventListener('resize', () => {
-    daySectionWidth = daySection.offsetWidth;
+    if (daySection) {
+        daySectionWidth = daySection.offsetWidth;
+    }
 });
 
 function scrollProgramLeft() {
-    container.scrollBy({ left: -daySectionWidth, behavior: 'smooth' });
+    if (container) {
+        container.scrollBy({ left: -daySectionWidth, behavior: 'smooth' });
+    }
 }
 
 function scrollProgramRight() {
-    container.scrollBy({ left: daySectionWidth, behavior: 'smooth' });
+    if (container) {
+        container.scrollBy({ left: daySectionWidth, behavior: 'smooth' });
+    }
 }
