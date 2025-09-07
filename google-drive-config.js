@@ -229,6 +229,7 @@ class GoogleDriveIntegration {
     }
 
     async processFile(file, year) {
+        console.log('🔍 Processing file:', file.name, 'MIME:', file.mimeType);
         const mimeType = file.mimeType;
         let type = 'photos'; // default
         
@@ -242,6 +243,8 @@ class GoogleDriveIntegration {
         } else if (file.name.toLowerCase().includes('social') || file.name.toLowerCase().includes('instagram')) {
             type = 'social';
         }
+        
+        console.log('📂 File type determined:', type);
 
         // Create media item object
         const mediaItem = {
@@ -278,6 +281,7 @@ class GoogleDriveIntegration {
                 break;
         }
 
+        console.log('✅ Created media item:', mediaItem);
         return mediaItem;
     }
 
@@ -304,7 +308,7 @@ class GoogleDriveIntegration {
         return title;
     }
 
-    generateDescription(filename, type) {
+    generateDescription(_filename, type) {
         const typeDescriptions = {
             'photos': 'Una foto del nostro viaggio in Rwanda',
             'videos': 'Un video del nostro viaggio in Rwanda',
@@ -437,6 +441,7 @@ class GalleryGoogleDriveIntegration {
             
             if (mediaItems.length > 0) {
                 console.log(`✅ Successfully loaded ${mediaItems.length} items from Google Drive`);
+                console.log('📋 Media items loaded:', mediaItems);
                 this.gallery.galleryData = mediaItems;
                 this.gallery.renderGallery();
             } else {
