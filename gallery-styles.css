@@ -435,9 +435,12 @@
     }
     
     .lightbox-info {
-        max-width: 250px;
+        max-width: calc(100vw - 20px);
         padding: 12px;
-        top: 60px; /* Move down on mobile to avoid notches */
+        top: auto;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
     }
     
     .lightbox-title {
@@ -550,12 +553,6 @@
         height: 60vh;
     }
     
-    .lightbox-info {
-        bottom: 10px;
-        left: 10px;
-        right: 10px;
-        padding: 15px;
-    }
     
     .lightbox-nav {
         width: 50px;
