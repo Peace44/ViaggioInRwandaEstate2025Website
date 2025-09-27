@@ -4,21 +4,14 @@
 class GoogleDriveIntegration {
     constructor() {
         // You'll need to set these up in Google Cloud Console
-        // this.CLIENT_ID = '544059189758-3rrcms327hfg52mrbt9jm4gu790se4ie.apps.googleusercontent.com';
         this.CLIENT_ID = '290448912885-j3ukltlamn3dv99ejoptqir4i9pdibho.apps.googleusercontent.com'; // Personal project
-        
-        // this.API_KEY = 'AIzaSyCE9xV9-tC9uRCrI2jlJ-H4SwntdQdEg68';
         this.API_KEY = 'AIzaSyAtE4pLQPi8QeWq3zLGfDjMD1B7dXjC8bw'; // Personal project
-        
         this.DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest';
-        
         this.SCOPES = 'https://www.googleapis.com/auth/drive.readonly';
         
         // Your Google Drive folder structure
         this.FOLDERS = {
-            // '2025': '1JYQEunhTGq2vdns3qDZ1GEqXmsBgCOUH', // Replace with actual folder ID from Google Drive
             '2025': '18pJ_6rLcTpe2dMyutbkUN3TloFWGIEtM',
-            
             '2026': null, // For future trips
             '2027': null  // For future trips
         };
