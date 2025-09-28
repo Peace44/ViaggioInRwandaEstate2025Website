@@ -133,6 +133,52 @@ class GoogleDriveIntegration {
         }
     }
 
+    async getFileComments(fileId) {
+        try {
+            // Try using GAPI client first
+            if (gapi.client.drive && gapi.client.drive.comments) {
+                const response = await gapi.client.drive.comments.list({
+                    fileId: fileId,
+                    fields: 'comments(content, author/displayName, createdTime)',
+                    key: this.API_KEY
+                });
+                return response.result.comments || [];
+            }
+        } catch (error) {
+            console.log('GAPI comments method failed, trying direct HTTP request...');
+        }
+
+        // Fallback: Direct HTTP request
+        try {
+            const params = new URLSearchParams({
+                fields: 'comments(content, author/displayName, createdTime)',
+                key: this.API_KEY
+            });
+
+            let response = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}/comments?${params}`);
+
+            if (!response.ok && this.accessToken) {
+                // Try with authentication
+                params.delete('key');
+                response = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}/comments?${params}`, {
+                    headers: {
+                        'Authorization': `Bearer ${this.accessToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+            }
+
+            if (response.ok) {
+                const data = await response.json();
+                return data.comments || [];
+            }
+        } catch (error) {
+            console.log('Error fetching comments for file:', fileId, error);
+        }
+
+        return [];
+    }
+
     async getFolderContents(folderId) {
         try {
             // Try using GAPI client first (if discovery docs worked)
@@ -246,15 +292,15 @@ class GoogleDriveIntegration {
     async processFile(file, year) {
         console.log('🔍 Processing file:', file.name, 'MIME:', file.mimeType);
         const mimeType = file.mimeType;
-        
+
         // Skip Google Apps folders and other non-media files
         if (mimeType === 'application/vnd.google-apps.folder') {
             console.log('⏭️ Skipping folder:', file.name);
             return null;
         }
-        
+
         let type = 'photos'; // default
-        
+
         // Determine media type based on MIME type or file name
         if (mimeType.startsWith('image/')) {
             type = 'photos';
@@ -269,8 +315,21 @@ class GoogleDriveIntegration {
             console.log('⏭️ Skipping unsupported file type:', file.name, mimeType);
             return null;
         }
-        
+
         console.log('📂 File type determined:', type);
+
+        // Fetch comments for this file
+        console.log('💬 Fetching comments for:', file.name);
+        const comments = await this.getFileComments(file.id);
+
+        // Combine original description with comments
+        let description = file.description || this.generateDescription(file.name, type);
+        if (comments.length > 0) {
+            // Use the most recent comment as the main description
+            const latestComment = comments[0];
+            description = latestComment.content || description;
+            console.log('📝 Found comment for', file.name + ':', latestComment.content);
+        }
 
         // Create media item object
         const mediaItem = {
@@ -278,12 +337,13 @@ class GoogleDriveIntegration {
             type: type,
             year: year,
             title: this.extractTitle(file.name),
-            description: file.description || this.generateDescription(file.name, type),
+            description: description,
             date: file.createdTime,
             location: 'Rwanda', // You can enhance this based on file metadata or naming
             tags: this.extractTags(file.name),
             googleDriveId: file.id,
-            originalName: file.name
+            originalName: file.name,
+            comments: comments // Store all comments for potential future use
         };
 
         // Set URLs based on type
