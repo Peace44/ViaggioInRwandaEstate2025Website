@@ -11,8 +11,9 @@ class GoogleDriveIntegration {
         
         // Your Google Drive folder structure
         this.FOLDERS = {
+            '2024': '1Wf-Emzxn0DsqFCEq3FhlnTwk-kQFEc84',
             '2025': '18pJ_6rLcTpe2dMyutbkUN3TloFWGIEtM',
-            '2026': null, // For future trips
+            '2026': '1Say7SV2rdSNIqPZlNiDwDxAumZl4i7nz',
             '2027': null  // For future trips
         };
         
