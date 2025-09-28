@@ -42,93 +42,86 @@ class GalleryManager {
         }
         
         // Fallback to sample data if Google Drive fails
-        this.galleryData = [
+        const baseSampleData = [
             {
                 id: 1,
                 type: 'photos',
-                year: '2025',
                 title: 'Arrivo a Kigali',
                 description: 'Il nostro gruppo all\'aeroporto internazionale di Kigali, pronti per iniziare l\'avventura.',
                 imageUrl: 'images/kigali-international-airport.jpg',
                 thumbnailUrl: 'images/kigali-international-airport.jpg',
-                date: '2025-07-15',
                 location: 'Kigali, Rwanda',
                 tags: ['arrivo', 'aeroporto', 'gruppo']
             },
             {
                 id: 2,
                 type: 'photos',
-                year: '2025',
                 title: 'Memoriale del Genocidio',
                 description: 'Momento di riflessione al Memoriale del Genocidio dei Tutsi a Gisozi.',
                 imageUrl: 'images/KigaliGenocideMemorial.jpg',
                 thumbnailUrl: 'images/KigaliGenocideMemorial.jpg',
-                date: '2025-07-16',
                 location: 'Kigali, Rwanda',
                 tags: ['memoriale', 'storia', 'riflessione']
             },
             {
                 id: 3,
                 type: 'photos',
-                year: '2025',
                 title: 'Safari all\'Akagera',
                 description: 'Incredibili avvistamenti di fauna selvatica nel Parco Nazionale dell\'Akagera.',
                 imageUrl: 'images/AkageraNationalPark.jpg',
                 thumbnailUrl: 'images/AkageraNationalPark.jpg',
-                date: '2025-07-17',
                 location: 'Parco Nazionale Akagera, Rwanda',
                 tags: ['safari', 'natura', 'animali']
             },
             {
                 id: 4,
                 type: 'videos',
-                year: '2025',
                 title: 'Scimmie nella Foresta di Nyungwe',
                 description: 'Video delle scimmie nella splendida Foresta di Nyungwe.',
                 videoUrl: 'videos/nyungwe_monkeys.mp4',
                 thumbnailUrl: 'images/NyungweForest.jpeg',
-                date: '2025-07-24',
                 location: 'Foresta di Nyungwe, Rwanda',
                 tags: ['natura', 'primati', 'foresta']
             },
             {
                 id: 5,
                 type: 'photos',
-                year: '2025',
                 title: 'Attività con i bambini di Bumazi',
                 description: 'Momenti indimenticabili con i bambini della Scuola Primaria di Bumazi.',
                 imageUrl: 'images/Bumazi.jpg',
                 thumbnailUrl: 'images/Bumazi.jpg',
-                date: '2025-07-20',
                 location: 'Bumazi, Rwanda',
                 tags: ['volontariato', 'bambini', 'scuola']
             },
             {
                 id: 6,
                 type: 'articles',
-                year: '2025',
                 title: 'La nostra esperienza su Scuola Europa',
                 description: 'Leggi il racconto completo della nostra indimenticabile esperienza in Rwanda.',
                 articleUrl: 'https://www.scuolaeuropa.it/viaggio-in-ruanda/',
                 thumbnailUrl: 'images/Kigali.png',
-                date: '2025-08-01',
                 location: 'Online',
                 tags: ['racconto', 'esperienza', 'articolo']
             },
             {
                 id: 7,
                 type: 'social',
-                year: '2025',
                 title: 'Post Instagram del viaggio',
                 description: 'I nostri momenti condivisi sui social media.',
                 socialUrl: 'https://www.instagram.com/p/CxNMk-3qn-i/?igshid=MTc4MmM1YmI2Ng',
                 embedCode: '<blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/CxNMk-3qn-i/?igshid=MTc4MmM1YmI2Ng" data-instgrm-version="14"></blockquote>',
                 thumbnailUrl: 'images/traditionalRwandanDance.jpg',
-                date: '2025-07-22',
                 location: 'Rwanda',
                 tags: ['social', 'instagram', 'condivisione']
             }
         ];
+
+        // Use the same sample data for all years, just update the year and date
+        this.galleryData = baseSampleData.map(item => ({
+            ...item,
+            year: this.currentYear,
+            date: `${this.currentYear}-07-${15 + item.id}` // Generate dates based on item id
+        }));
 
         // Render gallery with sample data
         this.renderGallery();
@@ -206,16 +199,17 @@ class GalleryManager {
         this.renderGallery();
     }
 
-    setYear(year) {
+    async setYear(year) {
         this.currentYear = year;
-        
+
         // Update active button
         document.querySelectorAll('.year-btn').forEach(btn => {
             btn.classList.remove('active');
         });
         document.querySelector(`[data-year="${year}"]`).classList.add('active');
-        
-        this.renderGallery();
+
+        // Reload data for the new year
+        await this.loadGalleryData();
     }
 
     setView(view) {
