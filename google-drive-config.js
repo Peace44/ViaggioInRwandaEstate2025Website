@@ -310,6 +310,9 @@ class GoogleDriveIntegration {
             type = 'articles';
         } else if (file.name.toLowerCase().includes('social') || file.name.toLowerCase().includes('instagram')) {
             type = 'social';
+        } else if (mimeType === 'application/json' || file.name.toLowerCase().endsWith('.json')) {
+            // Handle JSON files - could be social media configurations
+            return await this.processJsonFile(file, year);
         } else if (!mimeType.startsWith('image/') && !mimeType.startsWith('video/')) {
             // Skip unsupported file types
             console.log('⏭️ Skipping unsupported file type:', file.name, mimeType);
@@ -397,6 +400,57 @@ class GoogleDriveIntegration {
 
         console.log('✅ Created media item:', mediaItem);
         return mediaItem;
+    }
+
+    async processJsonFile(file, year) {
+        console.log('📄 Processing JSON file:', file.name);
+
+        try {
+            // Download and parse the JSON file content
+            const response = await fetch(`https://www.googleapis.com/drive/v3/files/${file.id}?alt=media`, {
+                headers: {
+                    'Authorization': `Bearer ${this.accessToken}`
+                }
+            });
+
+            if (!response.ok) {
+                console.log('❌ Failed to download JSON file:', file.name);
+                return null;
+            }
+
+            const jsonContent = await response.json();
+            console.log('📋 JSON content:', jsonContent);
+
+            // Validate that this is a social media configuration
+            if (!jsonContent.type || jsonContent.type !== 'social') {
+                console.log('⏭️ Skipping non-social JSON file:', file.name);
+                return null;
+            }
+
+            // Create media item from JSON configuration
+            const mediaItem = {
+                id: jsonContent.id || file.id,
+                type: 'social',
+                year: year,
+                title: jsonContent.title || this.extractTitle(file.name),
+                description: jsonContent.description || 'Social media content',
+                date: jsonContent.date || file.createdTime,
+                location: jsonContent.location || 'Rwanda',
+                tags: jsonContent.tags || ['social'],
+                socialUrl: jsonContent.socialUrl,
+                embedCode: jsonContent.embedCode,
+                thumbnailUrl: jsonContent.thumbnailUrl || 'images/social-placeholder.jpg',
+                googleDriveId: file.id,
+                originalName: file.name
+            };
+
+            console.log('✅ Created social media item from JSON:', mediaItem);
+            return mediaItem;
+
+        } catch (error) {
+            console.error('❌ Error processing JSON file:', file.name, error);
+            return null;
+        }
     }
 
     getDirectImageLink(fileId) {
