@@ -113,7 +113,29 @@ class GalleryManager {
                 thumbnailUrl: 'images/traditionalRwandanDance.jpg',
                 location: 'Rwanda',
                 tags: ['social', 'instagram', 'condivisione']
-            }
+            },
+            {
+                id: 8,
+                type: 'social',
+                title: 'Highlights del Viaggio - YouTube',
+                description: 'Il video riassuntivo dei momenti più belli del nostro viaggio in Rwanda.',
+                socialUrl: 'https://www.youtube.com/watch?v=4UhqVGiwy0s',
+                embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/4UhqVGiwy0s?si=c3p2bgLaz4QsVmup" title="Rwanda 2025 - Highlights del Viaggio" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
+                thumbnailUrl: 'images/Kigali.png',
+                location: 'Rwanda',
+                tags: ['social', 'youtube', 'highlights', 'video']
+            },
+            // {
+            //     id: 9,
+            //     type: 'social',
+            //     title: 'Esperienza di Volontariato - YouTube',
+            //     description: 'Documentario sulla nostra esperienza di volontariato con i bambini rwandesi.',
+            //     socialUrl: 'https://www.youtube.com/watch?v=VIDEO_ID_2',
+            //     embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/VIDEO_ID_2" title="Rwanda 2025 - Volontariato" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
+            //     thumbnailUrl: 'images/Bumazi.jpg',
+            //     location: 'Rwanda',
+            //     tags: ['social', 'youtube', 'volontariato', 'bambini']
+            // }
         ];
 
         // Use the same sample data for all years, just update the year and date
