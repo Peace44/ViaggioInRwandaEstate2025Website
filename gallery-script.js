@@ -125,17 +125,17 @@ class GalleryManager {
                 location: 'Rwanda',
                 tags: ['social', 'youtube', 'highlights', 'video']
             },
-            // {
-            //     id: 9,
-            //     type: 'social',
-            //     title: 'Esperienza di Volontariato - YouTube',
-            //     description: 'Documentario sulla nostra esperienza di volontariato con i bambini rwandesi.',
-            //     socialUrl: 'https://www.youtube.com/watch?v=VIDEO_ID_2',
-            //     embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/VIDEO_ID_2" title="Rwanda 2025 - Volontariato" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
-            //     thumbnailUrl: 'images/Bumazi.jpg',
-            //     location: 'Rwanda',
-            //     tags: ['social', 'youtube', 'volontariato', 'bambini']
-            // }
+            {
+                id: 9,
+                type: 'social',
+                title: 'Discorso di Carlo ai bambini di Bumazi - YouTube',
+                description: '🎙️ Un momento di gratitudine e riflessione In questo video. vediamo Carlo, uno studente milanese che prende la parola davanti alla comunità ruandese, esprimendo con emozione la sua riconoscenza per l’accoglienza ricevuta e per tutto ciò che ha imparato dai bambini del Rwanda: la semplicità, la forza dei legami, e il valore della condivisione. Nel contesto ruandese, ogni occasione significativa è accompagnata da discorsi profondi e autentici, che danno voce alle emozioni e rafforzano il senso di comunità. Questo intervento ne è un esempio: un momento di dialogo sincero, che unisce culture diverse nel rispetto e nell’ascolto reciproco.',
+                socialUrl: 'https://www.youtube.com/watch?v=8pelGvMFxos',
+                embedCode: '<iframe width="560" height="315" src="https://www.youtube.com/embed/8pelGvMFxos?si=mdlLx_A_kK0OAxMu" title="Rwanda 2025 - Volontariato" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
+                thumbnailUrl: 'images/Bumazi.jpg',
+                location: 'Rwanda',
+                tags: ['social', 'youtube', 'volontariato', 'bambini']
+            }
         ];
 
         // Use the same sample data for all years, just update the year and date
