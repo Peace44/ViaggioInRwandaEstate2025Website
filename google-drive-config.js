@@ -406,38 +406,46 @@ class GoogleDriveIntegration {
     async processJsonFile(file, year) {
         console.log('📄 Processing JSON file:', file.name);
 
-        // Ensure we have authentication to access file contents
-        if (!this.accessToken) {
-            console.log('🔐 No access token available, requesting authentication...');
-            const signInSuccess = await this.signIn();
-
-            // If still no token, skip this file
-            if (!signInSuccess || !this.accessToken) {
-                console.log('❌ Authentication failed, cannot process JSON file:', file.name);
-                return null;
-            }
-        }
-
         try {
-            // Download and parse the JSON file content
-            console.log('📥 Downloading JSON file content:', file.name);
-            const response = await fetch(`https://www.googleapis.com/drive/v3/files/${file.id}?alt=media`, {
-                headers: {
-                    'Authorization': `Bearer ${this.accessToken}`
-                }
-            });
+            // Try to access the JSON file via public link first
+            let jsonContent = null;
 
-            if (!response.ok) {
-                console.log('❌ Failed to download JSON file:', file.name, 'Status:', response.status);
-                if (response.status === 401) {
-                    console.log('🔐 Authentication expired, requesting new token...');
-                    await this.signIn();
+            // Attempt 1: Try direct public access using drive export link
+            try {
+                console.log('📥 Attempting public access to JSON file:', file.name);
+                const publicUrl = `https://drive.google.com/uc?export=download&id=${file.id}`;
+                const response = await fetch(publicUrl);
+
+                if (response.ok) {
+                    jsonContent = await response.json();
+                    console.log('✅ Successfully accessed JSON via public link:', file.name);
                 }
+            } catch (error) {
+                console.log('⚠️ Public access failed, trying alternative method:', error.message);
+            }
+
+            // Attempt 2: If public access fails, use API key (read-only access)
+            if (!jsonContent) {
+                try {
+                    console.log('📥 Attempting API key access to JSON file:', file.name);
+                    const response = await fetch(`https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${this.API_KEY}`);
+
+                    if (response.ok) {
+                        jsonContent = await response.json();
+                        console.log('✅ Successfully accessed JSON via API key:', file.name);
+                    }
+                } catch (error) {
+                    console.log('⚠️ API key access failed:', error.message);
+                }
+            }
+
+            // If no content was loaded, skip this file
+            if (!jsonContent) {
+                console.log('❌ Failed to load JSON content from:', file.name);
                 return null;
             }
 
-            const jsonContent = await response.json();
-            console.log('📋 JSON content loaded:', jsonContent);
+            console.log('📋 JSON content loaded successfully:', jsonContent);
 
             // Validate that this is a social media configuration
             if (!jsonContent.type || jsonContent.type !== 'social') {
