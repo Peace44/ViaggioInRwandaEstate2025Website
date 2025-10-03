@@ -406,8 +406,21 @@ class GoogleDriveIntegration {
     async processJsonFile(file, year) {
         console.log('📄 Processing JSON file:', file.name);
 
+        // Ensure we have authentication to access file contents
+        if (!this.accessToken) {
+            console.log('🔐 No access token available, requesting authentication...');
+            const signInSuccess = await this.signIn();
+
+            // If still no token, skip this file
+            if (!signInSuccess || !this.accessToken) {
+                console.log('❌ Authentication failed, cannot process JSON file:', file.name);
+                return null;
+            }
+        }
+
         try {
             // Download and parse the JSON file content
+            console.log('📥 Downloading JSON file content:', file.name);
             const response = await fetch(`https://www.googleapis.com/drive/v3/files/${file.id}?alt=media`, {
                 headers: {
                     'Authorization': `Bearer ${this.accessToken}`
@@ -415,12 +428,16 @@ class GoogleDriveIntegration {
             });
 
             if (!response.ok) {
-                console.log('❌ Failed to download JSON file:', file.name);
+                console.log('❌ Failed to download JSON file:', file.name, 'Status:', response.status);
+                if (response.status === 401) {
+                    console.log('🔐 Authentication expired, requesting new token...');
+                    await this.signIn();
+                }
                 return null;
             }
 
             const jsonContent = await response.json();
-            console.log('📋 JSON content:', jsonContent);
+            console.log('📋 JSON content loaded:', jsonContent);
 
             // Validate that this is a social media configuration
             if (!jsonContent.type || jsonContent.type !== 'social') {
