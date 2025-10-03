@@ -302,7 +302,11 @@ class GoogleDriveIntegration {
         let type = 'photos'; // default
 
         // Determine media type based on MIME type or file name
-        if (mimeType.startsWith('image/')) {
+        // Check for JSON files first (before other type checks)
+        if (mimeType === 'application/json' || file.name.toLowerCase().endsWith('.json')) {
+            // Handle JSON files - could be social media configurations
+            return await this.processJsonFile(file, year);
+        } else if (mimeType.startsWith('image/')) {
             type = 'photos';
         } else if (mimeType.startsWith('video/')) {
             type = 'videos';
@@ -310,9 +314,6 @@ class GoogleDriveIntegration {
             type = 'articles';
         } else if (file.name.toLowerCase().includes('social') || file.name.toLowerCase().includes('instagram')) {
             type = 'social';
-        } else if (mimeType === 'application/json' || file.name.toLowerCase().endsWith('.json')) {
-            // Handle JSON files - could be social media configurations
-            return await this.processJsonFile(file, year);
         } else if (!mimeType.startsWith('image/') && !mimeType.startsWith('video/')) {
             // Skip unsupported file types
             console.log('⏭️ Skipping unsupported file type:', file.name, mimeType);
