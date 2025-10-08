@@ -327,7 +327,24 @@ class GalleryManager {
                 itemTypeClass = 'item-article';
                 break;
             case 'social':
-                mediaContent = '';
+                // Check if it's a YouTube video
+                const isYouTube = item.socialUrl && item.socialUrl.includes('youtube.com');
+                if (isYouTube && item.thumbnailUrl) {
+                    mediaContent = `
+                        <div style="position: relative;">
+                            <img src="${item.thumbnailUrl}" alt="${item.title}" class="item-image" loading="lazy"
+                                 onerror="console.log('Thumbnail failed for:', '${item.title}'); this.src='images/Kigali.png';">
+                            <div class="video-overlay">
+                                <i class="fab fa-youtube"></i>
+                            </div>
+                        </div>
+                    `;
+                } else if (item.thumbnailUrl) {
+                    mediaContent = `<img src="${item.thumbnailUrl}" alt="${item.title}" class="item-image" loading="lazy"
+                                   onerror="console.log('Thumbnail failed for:', '${item.title}'); this.src='images/Kigali.png';">`;
+                } else {
+                    mediaContent = '';
+                }
                 itemTypeClass = 'item-social';
                 break;
         }

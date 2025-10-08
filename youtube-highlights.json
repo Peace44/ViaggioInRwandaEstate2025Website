@@ -5,7 +5,7 @@
   "description": "Il video riassuntivo dei momenti più belli del nostro viaggio in Rwanda.",
   "socialUrl": "https://www.youtube.com/watch?v=4UhqVGiwy0s",
   "embedCode": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/4UhqVGiwy0s?si=c3p2bgLaz4QsVmup\" title=\"Rwanda 2025 - Highlights del Viaggio\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>",
-  "thumbnailUrl": "images/Kigali.png",
+  "thumbnailUrl": "https://img.youtube.com/vi/4UhqVGiwy0s/maxresdefault.jpg",
   "location": "Rwanda",
   "tags": ["social", "youtube", "highlights", "video"],
   "date": "2025-07-20"
