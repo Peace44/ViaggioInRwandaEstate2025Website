@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Articoli - Rwanda Viaggio Estate 2025: Leggi le storie e gli articoli sul nostro viaggio in Rwanda">
+    <meta name="keywords" content="Rwanda, Viaggio, Articoli, Blog, Estate 2025, Volontariato, Storie">
+    <title>Articoli - Rwanda: Volontariato e Avventura</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="articles-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Fixed Header with Navigation Links -->
+    <header>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <nav>
+            <a href="index.html" aria-label="Home">Home</a>
+            <a href="index.html#about" aria-label="Il Progetto">Il Progetto</a>
+            <a href="index.html#program" aria-label="Programma">Programma</a>
+            <a href="index.html#objectives" aria-label="Obiettivi e Attività">Obiettivi e Attività</a>
+            <a href="gallery.html" aria-label="Galleria">Galleria</a>
+            <a href="#articles" onclick="scrollToSection('articles')" aria-label="Articoli" class="active">Articoli</a>
+            <a href="index.html#signup" aria-label="LISTA D'ATTESA" style="color: yellow; background-color: black;">LISTA D'ATTESA</a>
+            <a href="index.html#contact" aria-label="Contatti" style="color: #25D366;">Contatti</a>
+        </nav>
+    </header>
+
+    <!-- Articles Hero Section -->
+    <section class="articles-hero">
+        <div class="articles-hero-content">
+            <h1>Articoli e Storie</h1>
+            <p>Scopri le storie, le riflessioni e le esperienze del nostro viaggio in Rwanda</p>
+        </div>
+    </section>
+
+    <!-- Articles List Section -->
+    <section id="articles" class="articles-main">
+        <div class="articles-container">
+            <div class="articles-grid" id="articlesGrid">
+                <!-- Loading placeholder -->
+                <div class="loading-placeholder">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Caricamento articoli...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Preview Modal -->
+    <div class="article-modal" id="articleModal">
+        <div class="article-modal-container">
+            <button class="article-modal-close" id="articleModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="article-modal-content" id="articleModalContent">
+                <iframe id="articleFrame" frameborder="0"></iframe>
+            </div>
+
+            <div class="article-modal-footer">
+                <a id="articleExternalLink" href="#" target="_blank" rel="noopener noreferrer" class="external-link-btn">
+                    <i class="fas fa-external-link-alt"></i> Apri articolo completo
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="articles-script.js"></script>
+</body>
+</html>
