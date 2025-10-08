@@ -51,9 +51,21 @@ class ArticlesManager {
     generateTitle(url, index) {
         const source = this.detectSource(url);
 
+        // Detect specific Facebook pages from the URL
+        if (source === 'facebook') {
+            if (url.includes('scuolaeuropamilano')) {
+                return 'Post di Scuola Europa - Milano';
+            } else if (url.includes('jeanpaul.habimana')) {
+                return 'Post di Jean Paul Habimana';
+            } else if (url.includes('gariwo')) {
+                return 'Post di Gariwo';
+            } else {
+                return `Storia del viaggio - Post Facebook ${index > 0 ? index : ''}`.trim();
+            }
+        }
+
         const titles = {
-            'focusonafrica': 'Rwanda: l\'inatteso dalla capitale a Bumazi - Focus on Africa',
-            'facebook': `Storia del viaggio - Post Facebook ${index > 1 ? index - 1 : ''}`.trim()
+            'focusonafrica': 'Rwanda: l\'inatteso dalla capitale a Bumazi - Focus on Africa'
         };
 
         return titles[source] || `Articolo ${index + 1}`;
