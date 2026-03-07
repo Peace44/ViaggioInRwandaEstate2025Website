@@ -2,7 +2,7 @@
 class GalleryManager {
     constructor() {
         this.currentFilter = 'all';
-        this.currentYear = '2025';
+        this.currentYear = '2026';
         this.currentView = 'grid';
         this.galleryData = [];
         this.currentLightboxIndex = 0;
